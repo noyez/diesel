@@ -1,3 +1,5 @@
+#![cfg_attr(rustfmt, rustfmt_skip)] // https://github.com/rust-lang-nursery/rustfmt/issues/2754
+
 // Vendored from the static-cond crate as macro re-exports are not available in stable Rust.
 // https://github.com/durka/static-cond/blob/36aa2dd/src/lib.rs
 //

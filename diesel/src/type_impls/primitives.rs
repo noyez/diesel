@@ -17,7 +17,7 @@ mod foreign_impls {
 
     #[derive(FromSqlRow, AsExpression)]
     #[diesel(foreign_derive)]
-    #[cfg_attr(feature = "mysql", sql_type = "::sql_types::Tinyint")]
+    #[cfg_attr(feature = "mysql", sql_type = "::sql_types::TinyInt")]
     struct I8Proxy(i8);
 
     #[derive(FromSqlRow, AsExpression)]
@@ -34,6 +34,14 @@ mod foreign_impls {
     #[diesel(foreign_derive)]
     #[sql_type = "BigInt"]
     struct I64Proxy(i64);
+
+    #[derive(FromSqlRow, AsExpression)]
+    #[diesel(foreign_derive)]
+    #[cfg_attr(
+        feature = "mysql",
+        sql_type = "::sql_types::Unsigned<::sql_types::TinyInt>"
+    )]
+    struct U8Proxy(u8);
 
     #[derive(FromSqlRow, AsExpression)]
     #[diesel(foreign_derive)]

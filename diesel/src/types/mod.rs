@@ -15,8 +15,8 @@ pub use serialize::{IsNull, ToSql};
 #[deprecated(since = "1.1.0", note = "Use `sql_types::Bool` instead")]
 pub type Bool = ::sql_types::Bool;
 
-#[deprecated(since = "1.1.0", note = "Use `sql_types::Tinyint` instead")]
-pub type Tinyint = ::sql_types::Tinyint;
+#[deprecated(since = "1.1.0", note = "Use `sql_types::TinyInt` instead")]
+pub type TinyInt = ::sql_types::TinyInt;
 
 #[deprecated(since = "1.1.0", note = "Use `sql_types::SmallInt` instead")]
 pub type SmallInt = ::sql_types::SmallInt;
@@ -102,7 +102,10 @@ pub type Inet = ::sql_types::Inet;
 #[cfg(feature = "postgres")]
 pub type Cidr = ::sql_types::Cidr;
 
-#[deprecated(since = "1.1.0", note = "Use `sql_types::Nullable<ST: NotNull>(ST)` instead")]
+#[deprecated(
+    since = "1.1.0",
+    note = "Use `sql_types::Nullable<ST: NotNull>(ST)` instead"
+)]
 pub type Nullable<ST> = ::sql_types::Nullable<ST>;
 
 #[deprecated(since = "1.1.0", note = "Use `serialize::Output` instead")]

@@ -12,7 +12,7 @@
 //!
 //! ## Declaring your schema
 //!
-//! So Diesel is able to validate your queries at compile time,
+//! For Diesel to validate your queries at compile time
 //! it requires you to specify your schema in your code,
 //! which you can do with [the `table!` macro][`table!`].
 //! `diesel print-schema` or `infer_schema!` can be used
@@ -96,13 +96,15 @@
 #![cfg_attr(
     feature = "large-tables",
     deprecated(
-        since = "1.2.0", note = "The large-tables feature has been renamed to 32-column-tables"
+        since = "1.2.0",
+        note = "The large-tables feature has been renamed to 32-column-tables"
     )
 )]
 #![cfg_attr(
     feature = "huge-tables",
     deprecated(
-        since = "1.2.0", note = "The huge-tables feature has been renamed to 64-column-tables"
+        since = "1.2.0",
+        note = "The huge-tables feature has been renamed to 64-column-tables"
     )
 )]
 #![cfg_attr(
@@ -128,36 +130,40 @@
 )]
 #![cfg_attr(feature = "unstable", feature(specialization, try_from))]
 // Built-in Lints
-#![deny(warnings, missing_debug_implementations, missing_copy_implementations, missing_docs)]
+#![deny(
+    warnings,
+    missing_debug_implementations,
+    missing_copy_implementations,
+    missing_docs
+)]
 // Clippy lints
-#![cfg_attr(feature = "clippy", allow(unstable_features))]
-#![cfg_attr(feature = "clippy", feature(plugin))]
-#![cfg_attr(feature = "clippy", plugin(clippy(conf_file = "../../clippy.toml")))]
-#![cfg_attr(
-    feature = "clippy",
-    allow(
-        option_map_unwrap_or_else, option_map_unwrap_or, match_same_arms, type_complexity,
-        redundant_field_names
-    )
+#![allow(
+    clippy::option_map_unwrap_or_else,
+    clippy::option_map_unwrap_or,
+    clippy::match_same_arms,
+    clippy::type_complexity,
+    clippy::redundant_field_names
 )]
-#![cfg_attr(
-    feature = "clippy",
-    warn(
-        option_unwrap_used, result_unwrap_used, print_stdout, wrong_pub_self_convention, mut_mut,
-        non_ascii_literal, similar_names, unicode_not_nfc, enum_glob_use, if_not_else,
-        items_after_statements, used_underscore_binding
-    )
+#![cfg_attr(test, allow(clippy::option_map_unwrap_or, clippy::result_unwrap_used))]
+#![warn(
+    clippy::option_unwrap_used,
+    clippy::result_unwrap_used,
+    clippy::print_stdout,
+    clippy::wrong_pub_self_convention,
+    clippy::mut_mut,
+    clippy::non_ascii_literal,
+    clippy::similar_names,
+    clippy::unicode_not_nfc,
+    clippy::enum_glob_use,
+    clippy::if_not_else,
+    clippy::items_after_statements,
+    clippy::used_underscore_binding
 )]
-#![cfg_attr(all(test, feature = "clippy"), allow(option_unwrap_used, result_unwrap_used))]
-#![recursion_limit = "256"]
 
 #[cfg(feature = "postgres")]
 #[macro_use]
 extern crate bitflags;
 extern crate byteorder;
-// This is required to make `diesel_derives` re-export, but clippy thinks its unused
-#[cfg_attr(feature = "clippy", allow(useless_attribute))]
-#[allow(unused_imports)]
 #[macro_use]
 extern crate diesel_derives;
 #[doc(hidden)]
@@ -217,8 +223,9 @@ pub mod dsl {
     pub use expression::dsl::*;
 
     #[doc(inline)]
-    pub use query_builder::functions::{delete, insert_into, insert_or_ignore_into, replace_into,
-                                       select, sql_query, update};
+    pub use query_builder::functions::{
+        delete, insert_into, insert_or_ignore_into, replace_into, select, sql_query, update,
+    };
 }
 
 pub mod helper_types {
@@ -320,16 +327,23 @@ pub mod helper_types {
 
     /// Represents the return type of `.single_value()`
     pub type SingleValue<Source> = <Source as SingleValueDsl>::Output;
+
+    /// Represents the return type of `.nullable()`
+    pub type NullableSelect<Source> = <Source as SelectNullableDsl>::Output;
 }
 
 pub mod prelude {
     //! Re-exports important traits and types. Meant to be glob imported when using Diesel.
     pub use associations::{GroupedBy, Identifiable};
     pub use connection::Connection;
-    #[deprecated(since = "1.1.0", note = "Explicitly `use diesel::deserialize::Queryable")]
+    #[deprecated(
+        since = "1.1.0",
+        note = "Explicitly `use diesel::deserialize::Queryable"
+    )]
     pub use deserialize::Queryable;
-    pub use expression::{AppearsOnTable, BoxableExpression, Expression, IntoSql,
-                         SelectableExpression};
+    pub use expression::{
+        AppearsOnTable, BoxableExpression, Expression, IntoSql, SelectableExpression,
+    };
     pub use expression_methods::*;
     #[doc(inline)]
     pub use insertable::Insertable;
@@ -352,6 +366,11 @@ pub use prelude::*;
 #[doc(inline)]
 pub use query_builder::debug_query;
 #[doc(inline)]
-pub use query_builder::functions::{delete, insert_into, insert_or_ignore_into, replace_into,
-                                   select, sql_query, update};
+pub use query_builder::functions::{
+    delete, insert_into, insert_or_ignore_into, replace_into, select, sql_query, update,
+};
 pub use result::Error::NotFound;
+
+pub(crate) mod diesel {
+    pub use super::*;
+}

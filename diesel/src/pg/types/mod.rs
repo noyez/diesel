@@ -18,6 +18,8 @@ mod ranges;
 mod record;
 #[cfg(feature = "uuid")]
 mod uuid;
+#[cfg(feature = "uuidv07")]
+mod uuid_v0_7;
 
 /// PostgreSQL specific SQL types
 ///
@@ -150,9 +152,10 @@ pub mod sql_types {
     /// Your code would not compile in that case, as the `ToSql` trait itself is
     /// not implemented.
     ///
-    /// We do intend to provide an impl that can be used as a basis for named
-    /// composite types in the future, but there is no way for Diesel to
-    /// actually support a `ToSql` impl for anonymous record types.
+    /// You can implement `ToSql` for named composite types. See [`WriteTuple`]
+    /// for details.
+    ///
+    /// [`WriteTuple`]: ../../../serialize/trait.WriteTuple.html
     #[derive(Debug, Clone, Copy, Default, QueryId, SqlType)]
     #[postgres(oid = "2249", array_oid = "2287")]
     pub struct Record<ST>(ST);

@@ -270,7 +270,8 @@ mod tests {
                     query
                         .get_result::<PgInterval>(connection)
                         .map(|res| {
-                            val.months == res.months && val.days == res.days
+                            val.months == res.months
+                                && val.days == res.days
                                 && val.microseconds - res.microseconds.abs() <= 1
                         })
                         .unwrap_or(false)

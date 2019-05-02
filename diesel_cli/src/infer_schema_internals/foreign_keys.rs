@@ -1,13 +1,16 @@
-use data_structures::ForeignKeyConstraint;
-use inference::{establish_connection, get_primary_keys};
-use table_data::TableName;
+#![allow(clippy::expect_fun_call)] // My calls are so fun
+
+use super::data_structures::ForeignKeyConstraint;
+use super::inference::get_primary_keys;
+use super::table_data::TableName;
+use database::InferConnection;
 
 pub fn remove_unsafe_foreign_keys_for_codegen(
     database_url: &str,
     foreign_keys: &[ForeignKeyConstraint],
     safe_tables: &[TableName],
 ) -> Vec<ForeignKeyConstraint> {
-    let conn = establish_connection(database_url)
+    let conn = InferConnection::establish(database_url)
         .expect(&format!("Could not connect to `{}`", database_url));
 
     let duplicates = foreign_keys
